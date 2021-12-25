@@ -5,7 +5,10 @@ import 'package:ridan_sample/pages/cart.dart';
 import 'package:ridan_sample/utils/utils.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  const ProductDetailPage({Key? key}) : super(key: key);
+  final String image;
+  final String title;
+  final String price;
+  const ProductDetailPage({Key? key, required this.image,required this.price,required this.title}) : super(key: key);
 
   @override
   _ProductDetailPageState createState() => _ProductDetailPageState();
@@ -45,8 +48,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     bottomRight: Radius.circular(50.0),
                     bottomLeft: Radius.circular(50.0),
                   ),
-                  child: Image.asset(
-                    src,
+                  child: Image.network(
+                    widget.image,
                     fit: BoxFit.cover,
                     isAntiAlias: true,
                   ),
@@ -62,10 +65,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       // ignore: prefer_const_literals_to_create_immutables
                       children: [
                         // ignore: prefer_const_constructors
-                        Text(
-                          'Eywa Hoodie',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 28),
+                        Flexible(
+                          child: Text(
+                            widget.title,
+                            // overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
                         ),
                       ],
                     ),
@@ -75,7 +81,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           Text(
-                            r'$30.99',
+                            r'$'+widget.price,
                             style: TextStyle(fontSize: 18),
                           ),
                           Padding(
@@ -111,7 +117,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
                     //Sizes
 
-                 
                     const SizedBox(height: 16),
                     buildSliderTopLabel(),
                     SizedBox(
@@ -173,56 +178,55 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   Row radioColourMethod() {
     return Row(
-                    children: [
-                      Radio(
-                        toggleable: true,
-                        // title: const Text('Lafayette'),
-                        activeColor: Colors.white,
-                        value: 1,
-                        groupValue: 1,
-                        onChanged: (value) {
-                          setState(() {
-                            _value = value as int?;
-                          });
-                        },
-                      ),
-                      Radio(
-                        // title: const Text('Lafayette'),
-                        activeColor: Colors.grey,
-                        value: 2,
-                        groupValue: 2,
-                        onChanged: (value) {
-                          setState(() {
-                            _value = value as int?;
-                          });
-                        },
-                      ),
-                      Radio(
-                        // title: const Text('Lafayette'),
-                        activeColor: Colors.black,
-                        value: 3,
-                        groupValue: 3,
-                        onChanged: (value) {
-                          setState(() {
-                            _value = value as int?;
-                          });
-                        },
-                      ),
-                      Radio(
-                        // title: const Text('Lafayette'),
-                        activeColor: Colors.blue,
-                        value: 3,
-                        groupValue: 3,
-                        onChanged: (value) {
-                          setState(() {
-                            _value = value as int?;
-                          });
-                        },
-                      ),
-                    ],
-                  );
+      children: [
+        Radio(
+          toggleable: true,
+          // title: const Text('Lafayette'),
+          activeColor: Colors.white,
+          value: 1,
+          groupValue: 1,
+          onChanged: (value) {
+            setState(() {
+              _value = value as int?;
+            });
+          },
+        ),
+        Radio(
+          // title: const Text('Lafayette'),
+          activeColor: Colors.grey,
+          value: 2,
+          groupValue: 2,
+          onChanged: (value) {
+            setState(() {
+              _value = value as int?;
+            });
+          },
+        ),
+        Radio(
+          // title: const Text('Lafayette'),
+          activeColor: Colors.black,
+          value: 3,
+          groupValue: 3,
+          onChanged: (value) {
+            setState(() {
+              _value = value as int?;
+            });
+          },
+        ),
+        Radio(
+          // title: const Text('Lafayette'),
+          activeColor: Colors.blue,
+          value: 3,
+          groupValue: 3,
+          onChanged: (value) {
+            setState(() {
+              _value = value as int?;
+            });
+          },
+        ),
+      ],
+    );
   }
-
 
   ///Slider Helper Methods
 
@@ -251,9 +255,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       ),
     );
   }
-
-
-
 
   Widget buildSliderTopLabel() {
     final labels = ['S', 'M', 'L', 'XL', 'XXL'];

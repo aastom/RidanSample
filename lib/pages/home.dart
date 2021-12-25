@@ -1,9 +1,13 @@
+// ignore_for_file: avoid_unnecessary_containers, unnecessary_string_interpolations, prefer_const_constructors
+
 import 'package:flutter/material.dart';
+import 'package:ridan_sample/models/products.dart';
 import 'package:ridan_sample/pages/product_details.dart';
+import 'package:ridan_sample/services/api.dart';
 import 'package:ridan_sample/widgets/categories_list.dart';
 
 class Home extends StatefulWidget {
-  const Home({ Key? key }) : super(key: key);
+  const Home({Key? key}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
@@ -12,98 +16,120 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-     String src = "assets/images/denim.jpg";
+    getAllProducts();
+    String src = "assets/images/denim.jpg";
     return Container(
-        // height: screenHeight,
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          children: [
-            //Carousel
-            Expanded(
-              flex: 1,
-              child: Container(
-                height: 350,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(50.0),
-                    bottomLeft: Radius.circular(50.0),
-                  ),
-                  child: Image.asset(
-                    src,
-                    fit: BoxFit.cover,
-                    isAntiAlias: true,
-                  ),
+      // height: screenHeight,
+      child: ListView(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        children: [
+          //Carousel
+          Expanded(
+            flex: 1,
+            child: Container(
+              height: 350,
+              child: ClipRRect(
+                // ignore: prefer_const_constructors
+                borderRadius: BorderRadius.only(
+                  // ignore: prefer_const_constructors
+                  bottomRight: Radius.circular(50.0),
+                  bottomLeft: Radius.circular(50.0),
+                ),
+                child: Image.asset(
+                  src,
+                  fit: BoxFit.cover,
+                  isAntiAlias: true,
                 ),
               ),
             ),
+          ),
 
-            //Trending List
+          //Trending List
 
-            Expanded(
-              child: Container(
-                height: 200,
-                child: Column(
+          Expanded(
+            child: Container(
+              height: 200,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Trending',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[700]),
+                        ),
+                        Text(
+                          'Show all',
+                          style:
+                              TextStyle(color: Colors.blue[400], fontSize: 12),
+                        )
+                      ],
+                    ),
+                  ),
+                  //Product List
+                  Container(
+                    height: 150,
+                    child: FutureBuilder(
+                      future: getAllProducts(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.connectionState == ConnectionState.none &&
+                            snapshot.hasData == null) {
+                          return Container(
+                            height: 150,
+                          );
+                        }
+
+                        return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            padding: EdgeInsets.all(8),
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return newCardMethod(snapshot.data![index]);
+                            });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          //Category List
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Trending',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey[700]),
-                          ),
-                          Text(
-                            'Show all',
-                            style: TextStyle(
-                                color: Colors.blue[400], fontSize: 12),
-                          )
-                        ],
-                      ),
+                    Text(
+                      'Categories',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.grey[700]),
                     ),
-                    Container(
-                      height: 150,
-                      child: ListView(
-                        padding: EdgeInsets.all(8),
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        children: [
-                          ///List Card
-                          newCardMethod(src),
-                          newCardMethod(src),
-                          newCardMethod(src),
-                          newCardMethod(src),
-                        ],
-                      ),
-                    ),
+                    Text(
+                      'show all',
+                      style: TextStyle(color: Colors.blue[400], fontSize: 12),
+                    )
                   ],
                 ),
               ),
-            ),
-
-            //Category List
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const [Text('Categories'), Text('show all')],
-                  ),
-                ),
-                // ignore: prefer_const_constructors
-                CategoryList(),
-              ],
-            ),
-          ],
-        ),
-      );
+              // ignore: prefer_const_constructors
+              CategoryList(),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
-  Card newCardMethod(String src) {
+  Card newCardMethod(product) {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       shape: RoundedRectangleBorder(
@@ -119,8 +145,8 @@ class _HomeState extends State<Home> {
               flex: 2,
               child: Container(
                 width: 150,
-                child: Image.asset(
-                  src,
+                child: Image.network(
+                  product['image'],
                   fit: BoxFit.fill,
                   isAntiAlias: false,
                 ),
@@ -132,7 +158,11 @@ class _HomeState extends State<Home> {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => ProductDetailPage(),
+                      builder: (context) => ProductDetailPage(
+                        image: product['image'],
+                        price: product['price'].toString(),
+                        title: product['title'].toString(),
+                      ),
                     ),
                   );
                 },
@@ -141,25 +171,35 @@ class _HomeState extends State<Home> {
                   child: Column(
                     children: [
                       Row(
-                        children: const [
-                          Text(
-                            'Russ Shirt',
-                            style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: 12,
-                                color: Colors.grey),
+                        children: [
+                          Flexible(
+                            child: Container(
+                              child: Text(
+                                product['title'].toString(),
+                                overflow: TextOverflow.ellipsis,
+                                // ignore: prefer_const_constructors
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12,
+                                    color: Colors.grey),
+                              ),
+                            ),
                           ),
                         ],
                       ),
                       Row(
-                        children: const [
-                          Text(
-                            r'$19.99',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              // color: Colors.grey
-                            ),
+                        children: [
+                          Wrap(
+                            children: [
+                              Text(
+                                r'$' + product['price'].toString(),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  // color: Colors.grey
+                                ),
+                              ),
+                            ],
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 4),
@@ -174,9 +214,6 @@ class _HomeState extends State<Home> {
                           ),
                         ],
                       ),
-
-                     
-
                     ],
                   ),
                 ),

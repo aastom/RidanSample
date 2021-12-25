@@ -14,15 +14,17 @@ class _CartPageState extends State<CartPage> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      // appBar: AppBar(
-      //   automaticallyImplyLeading: true,
-      //   title: Text('My Cart'),
-      //   backgroundColor: Colors.white,
-      // ),
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Text('My Cart',style: TextStyle(color: Colors.black),),
+        backgroundColor: Colors.white10,
+        elevation:0,
+      ),
       body: Column(
         children: [
           Container(
-            height: screenHeight * 0.85,
+            height: screenHeight * 0.70,
             child: ListView.builder(
                 itemCount: 10,
                 // itemExtent: 100,
