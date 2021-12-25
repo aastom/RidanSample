@@ -104,73 +104,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         ],
                       ),
                     ),
-                    Row(
-                      children: [
-                        Radio(
-                          toggleable: true,
-                          // title: const Text('Lafayette'),
-                          activeColor: Colors.white,
-                          value: 1,
-                          groupValue: 1,
-                          onChanged: (value) {
-                            setState(() {
-                              _value = value as int?;
-                            });
-                          },
-                        ),
-                        Radio(
-                          // title: const Text('Lafayette'),
-                          activeColor: Colors.grey,
-                          value: 2,
-                          groupValue: 2,
-                          onChanged: (value) {
-                            setState(() {
-                              _value = value as int?;
-                            });
-                          },
-                        ),
-                        Radio(
-                          // title: const Text('Lafayette'),
-                          activeColor: Colors.black,
-                          value: 3,
-                          groupValue: 3,
-                          onChanged: (value) {
-                            setState(() {
-                              _value = value as int?;
-                            });
-                          },
-                        ),
-                        Radio(
-                          // title: const Text('Lafayette'),
-                          activeColor: Colors.blue,
-                          value: 3,
-                          groupValue: 3,
-                          onChanged: (value) {
-                            setState(() {
-                              _value = value as int?;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
+                    radioColourMethod(),
                     Row(
                       children: [Text('Size')],
                     ),
 
                     //Sizes
 
-                    // Slider(
-                    //     label: "$sliderValue",
-                    //     divisions: 4,
-                    //     min: 0,
-                    //     max: 1.0,
-                    //     value: sliderValue,
-                    //     onChanged: (newRating) {
-                    //       setState(() {
-                    //         sliderValue = newRating;
-                    //       });
-                    //     }),
-
+                 
                     const SizedBox(height: 16),
                     buildSliderTopLabel(),
                     SizedBox(
@@ -230,6 +171,59 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
+  Row radioColourMethod() {
+    return Row(
+                    children: [
+                      Radio(
+                        toggleable: true,
+                        // title: const Text('Lafayette'),
+                        activeColor: Colors.white,
+                        value: 1,
+                        groupValue: 1,
+                        onChanged: (value) {
+                          setState(() {
+                            _value = value as int?;
+                          });
+                        },
+                      ),
+                      Radio(
+                        // title: const Text('Lafayette'),
+                        activeColor: Colors.grey,
+                        value: 2,
+                        groupValue: 2,
+                        onChanged: (value) {
+                          setState(() {
+                            _value = value as int?;
+                          });
+                        },
+                      ),
+                      Radio(
+                        // title: const Text('Lafayette'),
+                        activeColor: Colors.black,
+                        value: 3,
+                        groupValue: 3,
+                        onChanged: (value) {
+                          setState(() {
+                            _value = value as int?;
+                          });
+                        },
+                      ),
+                      Radio(
+                        // title: const Text('Lafayette'),
+                        activeColor: Colors.blue,
+                        value: 3,
+                        groupValue: 3,
+                        onChanged: (value) {
+                          setState(() {
+                            _value = value as int?;
+                          });
+                        },
+                      ),
+                    ],
+                  );
+  }
+
+
   ///Slider Helper Methods
 
   Widget buildSliderSideLabel() {
@@ -257,6 +251,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       ),
     );
   }
+
+
+
 
   Widget buildSliderTopLabel() {
     final labels = ['S', 'M', 'L', 'XL', 'XXL'];
