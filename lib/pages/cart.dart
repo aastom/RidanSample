@@ -81,11 +81,14 @@ class _CartPageState extends State<CartPage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          cartItems[index].title,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 20),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            cartItems[index].title,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 20),
+                                          ),
                                         ),
                                         SizedBox(height:10),
                                       

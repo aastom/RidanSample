@@ -1,11 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ridan_sample/models/products.dart';
 import 'package:ridan_sample/pages/cart.dart';
+import 'package:ridan_sample/pages/home.dart';
 import 'package:ridan_sample/provider/cart_provider.dart';
 import 'package:ridan_sample/utils/utils.dart';
+import 'package:ridan_sample/widgets/cart_badge.dart';
 
 class ProductDetailPage extends StatefulWidget {
   // final String? image;
@@ -13,7 +16,8 @@ class ProductDetailPage extends StatefulWidget {
   // final String? price;
   final Products? product;
   const ProductDetailPage({
-    Key? key,this.product,
+    Key? key,
+    this.product,
   }) : super(key: key);
 
   @override
@@ -46,20 +50,47 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           children: [
             Expanded(
               flex: 1,
-              child: Container(
-                height: 350,
-                width: screenWidth,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(50.0),
-                    bottomLeft: Radius.circular(50.0),
+              child: Stack(
+                children: [
+                  Container(
+                    height: 350,
+                    width: screenWidth,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(50.0),
+                        bottomLeft: Radius.circular(50.0),
+                      ),
+                      child: Image.network(
+                        widget.product!.image.toString(),
+                        fit: BoxFit.cover,
+                        isAntiAlias: true,
+                      ),
+                    ),
                   ),
-                  child: Image.network(
-                    widget.product!.image.toString(),
-                    fit: BoxFit.cover,
-                    isAntiAlias: true,
-                  ),
-                ),
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 32, horizontal: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              // Navigator.of(context).push(MaterialPageRoute(
+                              //     builder: (context) => Home()));
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: Colors.white,
+                            ),
+                          ),
+                          CartBadge()
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
             Expanded(
