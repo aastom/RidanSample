@@ -15,6 +15,20 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getTheProducts();
+    // getAllProducts().then((value) => print(value));
+  }
+
+  getTheProducts() async {
+    //await allProducts();
+
+    await getTheProducts();
+  }
+
+  @override
   Widget build(BuildContext context) {
     getAllProducts();
     String src = "assets/images/denim.jpg";
@@ -74,9 +88,9 @@ class _HomeState extends State<Home> {
                   //Product List
                   Container(
                     height: 150,
-                    child: FutureBuilder(
+                    child: FutureBuilder<List<Products>>(
                       future: getAllProducts(),
-                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      builder: (BuildContext context, AsyncSnapshot<List<Products>> snapshot) {
                         if (snapshot.connectionState == ConnectionState.none &&
                             snapshot.hasData == null) {
                           return Container(
@@ -84,8 +98,14 @@ class _HomeState extends State<Home> {
                           );
                         }
 
+                        if(snapshot.data== null){
+                          return Container(
+                            height: 150,
+                          );
+                        }
+
                         return ListView.builder(
-                            itemCount: snapshot.data!.length,
+                            itemCount: snapshot.data!.length??0,
                             padding: EdgeInsets.all(8),
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
@@ -129,7 +149,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Card newCardMethod(product) {
+  Card newCardMethod(Products product) {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       shape: RoundedRectangleBorder(
@@ -146,7 +166,8 @@ class _HomeState extends State<Home> {
               child: Container(
                 width: 150,
                 child: Image.network(
-                  product['image'],
+                  product.image,
+                  // product['image'],
                   fit: BoxFit.fill,
                   isAntiAlias: false,
                 ),
@@ -159,9 +180,9 @@ class _HomeState extends State<Home> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => ProductDetailPage(
-                        image: product['image'],
-                        price: product['price'].toString(),
-                        title: product['title'].toString(),
+                        image: product.image,
+                        price: product.price.toString(),
+                        title: product.title.toString(),
                       ),
                     ),
                   );
@@ -175,7 +196,7 @@ class _HomeState extends State<Home> {
                           Flexible(
                             child: Container(
                               child: Text(
-                                product['title'].toString(),
+                                product.title.toString(),
                                 overflow: TextOverflow.ellipsis,
                                 // ignore: prefer_const_constructors
                                 style: TextStyle(
@@ -192,7 +213,7 @@ class _HomeState extends State<Home> {
                           Wrap(
                             children: [
                               Text(
-                                r'$' + product['price'].toString(),
+                                r'$' + product.price.toString(),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
