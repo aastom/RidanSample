@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ridan_sample/pages/cart.dart';
 import 'package:ridan_sample/pages/home.dart';
 import 'package:ridan_sample/pages/product_details.dart';
+import 'package:ridan_sample/provider/cart_provider.dart';
 import 'package:ridan_sample/widgets/categories_list.dart';
 
 void main() {
@@ -14,19 +17,33 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => CartManager(),
+            child: CartPage(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => CartManager(),
+            child: ProductDetailPage(),
+          ),
+        ],
+        child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const MyHomePage(),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const MyHomePage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -38,13 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
     var screenHeight = MediaQuery.of(context).size.height;
     String src = "assets/images/denim.jpg";
     return Scaffold(
-      backgroundColor: Colors.blueGrey[50],
-      // ignore: avoid_unnecessary_containers
-      body: Home()
-    );
+        backgroundColor: Colors.blueGrey[50],
+        // ignore: avoid_unnecessary_containers
+        body: Home());
   }
-
-  
 }
-
-

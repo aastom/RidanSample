@@ -105,7 +105,7 @@ class _HomeState extends State<Home> {
                         }
 
                         return ListView.builder(
-                            itemCount: snapshot.data!.length??0,
+                            itemCount: snapshot.data!.length,
                             padding: EdgeInsets.all(8),
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,

@@ -5,10 +5,10 @@ import 'package:ridan_sample/pages/cart.dart';
 import 'package:ridan_sample/utils/utils.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  final String image;
-  final String title;
-  final String price;
-  const ProductDetailPage({Key? key, required this.image,required this.price,required this.title}) : super(key: key);
+  final String? image;
+  final String? title;
+  final String? price;
+  const ProductDetailPage({Key? key,  this.image, this.price, this.title}) : super(key: key);
 
   @override
   _ProductDetailPageState createState() => _ProductDetailPageState();
@@ -49,7 +49,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     bottomLeft: Radius.circular(50.0),
                   ),
                   child: Image.network(
-                    widget.image,
+                    widget.image.toString(),
                     fit: BoxFit.cover,
                     isAntiAlias: true,
                   ),
@@ -67,7 +67,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         // ignore: prefer_const_constructors
                         Flexible(
                           child: Text(
-                            widget.title,
+                            widget.title.toString(),
                             // overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18),
@@ -81,7 +81,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           Text(
-                            r'$'+widget.price,
+                            r'$'+widget.price.toString(),
                             style: TextStyle(fontSize: 18),
                           ),
                           Padding(
