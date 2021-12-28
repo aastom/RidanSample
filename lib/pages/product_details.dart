@@ -1,14 +1,20 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ridan_sample/models/products.dart';
 import 'package:ridan_sample/pages/cart.dart';
+import 'package:ridan_sample/provider/cart_provider.dart';
 import 'package:ridan_sample/utils/utils.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  final String? image;
-  final String? title;
-  final String? price;
-  const ProductDetailPage({Key? key,  this.image, this.price, this.title}) : super(key: key);
+  // final String? image;
+  // final String? title;
+  // final String? price;
+  final Products? product;
+  const ProductDetailPage({
+    Key? key,this.product,
+  }) : super(key: key);
 
   @override
   _ProductDetailPageState createState() => _ProductDetailPageState();
@@ -49,7 +55,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     bottomLeft: Radius.circular(50.0),
                   ),
                   child: Image.network(
-                    widget.image.toString(),
+                    widget.product!.image.toString(),
                     fit: BoxFit.cover,
                     isAntiAlias: true,
                   ),
@@ -67,7 +73,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         // ignore: prefer_const_constructors
                         Flexible(
                           child: Text(
-                            widget.title.toString(),
+                            widget.product!.title.toString(),
                             // overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18),
@@ -81,7 +87,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         // ignore: prefer_const_literals_to_create_immutables
                         children: [
                           Text(
-                            r'$'+widget.price.toString(),
+                            r'$' + widget.product!.price.toString(),
                             style: TextStyle(fontSize: 18),
                           ),
                           Padding(
@@ -158,6 +164,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                                   MaterialStateProperty.all(Colors.transparent),
                             ),
                             onPressed: () {
+                              addToCart(widget.product);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -318,4 +325,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       );
+
+  void addToCart(Products? product) {
+    var cartProvider = Provider.of<CartManager>(context, listen: false);
+    cartProvider.addToCart(product!);
+  }
 }

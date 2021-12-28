@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_number_picker/flutter_number_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:ridan_sample/models/products.dart';
+import 'package:ridan_sample/provider/cart_provider.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -9,24 +12,34 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  List<Products> cartItems = [];
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
+    cartItems = Provider.of<CartManager>(context).carts;
+
+    
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
         iconTheme: IconThemeData(color: Colors.black),
-        title: Text('My Cart',style: TextStyle(color: Colors.black),),
+        title: Text(
+          'My Cart',
+          style: TextStyle(color: Colors.black),
+        ),
         backgroundColor: Colors.white10,
-        elevation:0,
+        elevation: 0,
       ),
       body: Column(
         children: [
           Container(
             height: screenHeight * 0.70,
             child: ListView.builder(
-                itemCount: 10,
+                itemCount: cartItems.length,
                 // itemExtent: 100,
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
@@ -56,7 +69,7 @@ class _CartPageState extends State<CartPage> {
                                         scale: 2,
                                         fit: BoxFit.fitHeight,
                                         image: NetworkImage(
-                                            'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80'),
+                                              cartItems[index].image),
                                       ),
                                     ),
                                   ),
@@ -69,14 +82,14 @@ class _CartPageState extends State<CartPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'Addidas',
+                                          cartItems[index].title,
                                           style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 24),
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 20),
                                         ),
-                                        Text(
-                                          'GH 44',
-                                        ),
+                                        SizedBox(height:10),
+                                      
+                                        
                                         Container(
                                           child: CustomNumberPicker(
                                             initialValue: 1,
@@ -95,8 +108,11 @@ class _CartPageState extends State<CartPage> {
                                 Expanded(
                                   flex: 1,
                                   child: Container(
-                                    child: Text(r'$30.77'),
-                                ),)
+                                    child: Text(
+                                         r'$'+ cartItems[index].price.toString(),
+                                        ),
+                                  ),
+                                )
                               ],
                             ),
                           ),

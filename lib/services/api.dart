@@ -25,7 +25,7 @@ Future <List<Products>> getAllProducts() async {
     if (response.statusCode == 200) {
     
 
-      debugPrint(response.data.toString());
+      // debugPrint(response.data.toString());
 
       prodData =
           (response.data as List).map((v) => Products.fromJson(v)).toList();

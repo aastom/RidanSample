@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getTheProducts();
+   // getTheProducts();
     // getAllProducts().then((value) => print(value));
   }
 
@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    getAllProducts();
+   // getAllProducts();
     String src = "assets/images/denim.jpg";
     return Container(
       // height: screenHeight,
@@ -180,9 +180,7 @@ class _HomeState extends State<Home> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => ProductDetailPage(
-                        image: product.image,
-                        price: product.price.toString(),
-                        title: product.title.toString(),
+                        product: product,
                       ),
                     ),
                   );
