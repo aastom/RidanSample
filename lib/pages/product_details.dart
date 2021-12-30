@@ -9,6 +9,8 @@ import 'package:ridan_sample/pages/home.dart';
 import 'package:ridan_sample/provider/cart_provider.dart';
 import 'package:ridan_sample/utils/utils.dart';
 import 'package:ridan_sample/widgets/cart_badge.dart';
+import 'package:ridan_sample/widgets/radio.dart';
+import 'package:ridan_sample/widgets/silder.dart';
 
 class ProductDetailPage extends StatefulWidget {
   // final String? image;
@@ -25,7 +27,7 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-  int? _value = 1;
+  int? _value = 0;
   double sliderValue = 0.0;
 
   int indexTop = 0;
@@ -147,69 +149,68 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         ],
                       ),
                     ),
-                    radioColourMethod(),
+                    RadioWidget(),
                     Row(
                       children: [Text('Size')],
                     ),
 
-                    //Sizes
-
                     const SizedBox(height: 16),
-                    buildSliderTopLabel(),
-                    SizedBox(
-                      width: 280,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black26,
-                                offset: Offset(0, 4),
-                                blurRadius: 5.0)
-                          ],
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            stops: [0.0, 1.0],
-                            colors: [
-                              Colors.blue.shade800,
-                              Colors.blue.shade200,
-                            ],
-                          ),
-                          color: Colors.blue.shade300,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: ElevatedButton(
-                            style: ButtonStyle(
-                              // minimumSize:  MaterialStateProperty.all<Size>(),
-                              shape: MaterialStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  // side: BorderSide(color: Colors.red),
-                                ),
-                              ),
-                              elevation: MaterialStateProperty.all<double>(5.0),
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  Colors.transparent),
-                              shadowColor:
-                                  MaterialStateProperty.all(Colors.transparent),
-                            ),
-                            onPressed: () {
-                              addToCart(widget.product);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CartPage()));
-                            },
-                            child: Text('Add To Cart')),
-                      ),
-                    )
+                    
+                    SliderWidget(),
+
+                    //button
+                    addToCartButton(context)
                   ],
                 ),
               ),
             )
           ],
         )),
+      ),
+    );
+  }
+
+  SizedBox addToCartButton(BuildContext context) {
+    return SizedBox(
+      width: 280,
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black26, offset: Offset(0, 4), blurRadius: 5.0)
+          ],
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            stops: [0.0, 1.0],
+            colors: [
+              Colors.blue.shade800,
+              Colors.blue.shade200,
+            ],
+          ),
+          color: Colors.blue.shade300,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: ElevatedButton(
+            style: ButtonStyle(
+              // minimumSize:  MaterialStateProperty.all<Size>(),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  // side: BorderSide(color: Colors.red),
+                ),
+              ),
+              elevation: MaterialStateProperty.all<double>(5.0),
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(Colors.transparent),
+              shadowColor: MaterialStateProperty.all(Colors.transparent),
+            ),
+            onPressed: () {
+              addToCart(widget.product);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => CartPage()));
+            },
+            child: Text('Add To Cart')),
       ),
     );
   }
@@ -222,7 +223,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           // title: const Text('Lafayette'),
           activeColor: Colors.white,
           value: 1,
-          groupValue: 1,
+          groupValue: _value,
           onChanged: (value) {
             setState(() {
               _value = value as int?;
@@ -231,9 +232,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ),
         Radio(
           // title: const Text('Lafayette'),
-          activeColor: Colors.grey,
+          activeColor: Colors.grey[600],
           value: 2,
-          groupValue: 2,
+          groupValue: _value,
           onChanged: (value) {
             setState(() {
               _value = value as int?;
@@ -244,7 +245,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           // title: const Text('Lafayette'),
           activeColor: Colors.black,
           value: 3,
-          groupValue: 3,
+          groupValue: _value,
           onChanged: (value) {
             setState(() {
               _value = value as int?;
@@ -254,8 +255,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         Radio(
           // title: const Text('Lafayette'),
           activeColor: Colors.blue,
-          value: 3,
-          groupValue: 3,
+          value: 4,
+          groupValue: _value,
           onChanged: (value) {
             setState(() {
               _value = value as int?;
@@ -267,95 +268,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   ///Slider Helper Methods
-
-  Widget buildSliderSideLabel() {
-    final double min = 20;
-    final double max = 80;
-    final divisions = 4;
-
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        children: [
-          buildSideLabel(min),
-          Expanded(
-            child: Slider(
-              value: valueBottom,
-              min: min,
-              max: max,
-              divisions: divisions,
-              label: valueBottom.round().toString(),
-              onChanged: (value) => setState(() => this.valueBottom = value),
-            ),
-          ),
-          buildSideLabel(max),
-        ],
-      ),
-    );
-  }
-
-  Widget buildSliderTopLabel() {
-    final labels = ['S', 'M', 'L', 'XL', 'XXL'];
-    final double min = 0;
-    final double max = labels.length - 1.0;
-    final divisions = labels.length - 1;
-
-    return Column(
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: Utils.modelBuilder(
-              labels,
-              (index, label) {
-                final selectedColor = Colors.blue;
-                final unselectedColor = Colors.blue.withOpacity(0.3);
-                final isSelected = index <= indexTop;
-                final color = isSelected ? selectedColor : unselectedColor;
-
-                return buildLabel(
-                    label: label.toString(), color: color, width: 30);
-              },
-            ),
-          ),
-        ),
-        Slider(
-          value: indexTop.toDouble(),
-          min: min,
-          max: max,
-          divisions: divisions,
-          // label: labels[indexTop],
-          onChanged: (value) => setState(() => this.indexTop = value.toInt()),
-        ),
-      ],
-    );
-  }
-
-  Widget buildLabel({
-    required String label,
-    required double width,
-    required Color color,
-  }) =>
-      Container(
-        width: width,
-        child: Text(
-          label,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-          ).copyWith(color: color),
-        ),
-      );
-
-  Widget buildSideLabel(double value) => Container(
-        width: 25,
-        child: Text(
-          value.round().toString(),
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-      );
 
   void addToCart(Products? product) {
     var cartProvider = Provider.of<CartManager>(context, listen: false);
