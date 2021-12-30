@@ -36,13 +36,7 @@ class CategoryList extends StatelessWidget {
               trailing: Icon(Icons.chevron_right),
             ),
           ),
-          Card(
-            child: ListTile(
-              leading: Icon(Icons.pregnant_woman_outlined),
-              title: Text('Woman (736)'),
-              trailing: Icon(Icons.chevron_right),
-            ),
-          ),
+          
         
         ],
       ),

@@ -27,8 +27,8 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-  int? _value = 0;
-  double sliderValue = 0.0;
+  
+ 
 
   int indexTop = 0;
   double valueBottom = 20;
@@ -95,6 +95,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ],
               ),
             ),
+
+            
             Expanded(
               child: Container(
                 padding: EdgeInsets.all(16),
@@ -215,57 +217,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     );
   }
 
-  Row radioColourMethod() {
-    return Row(
-      children: [
-        Radio(
-          toggleable: true,
-          // title: const Text('Lafayette'),
-          activeColor: Colors.white,
-          value: 1,
-          groupValue: _value,
-          onChanged: (value) {
-            setState(() {
-              _value = value as int?;
-            });
-          },
-        ),
-        Radio(
-          // title: const Text('Lafayette'),
-          activeColor: Colors.grey[600],
-          value: 2,
-          groupValue: _value,
-          onChanged: (value) {
-            setState(() {
-              _value = value as int?;
-            });
-          },
-        ),
-        Radio(
-          // title: const Text('Lafayette'),
-          activeColor: Colors.black,
-          value: 3,
-          groupValue: _value,
-          onChanged: (value) {
-            setState(() {
-              _value = value as int?;
-            });
-          },
-        ),
-        Radio(
-          // title: const Text('Lafayette'),
-          activeColor: Colors.blue,
-          value: 4,
-          groupValue: _value,
-          onChanged: (value) {
-            setState(() {
-              _value = value as int?;
-            });
-          },
-        ),
-      ],
-    );
-  }
+  
 
   ///Slider Helper Methods
 
