@@ -29,12 +29,12 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: const MyHomePage(),
         ),
-        home: const MyHomePage(),
-      ),
       ),
     );
   }

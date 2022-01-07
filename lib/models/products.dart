@@ -21,10 +21,6 @@ class Products {
   Map<String, dynamic> toJson() => _$ProductsToJson(this);
 }
 
-
-
-
-
 // class Products {
 //   int id;
 //   String title;

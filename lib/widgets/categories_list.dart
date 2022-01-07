@@ -36,8 +36,6 @@ class CategoryList extends StatelessWidget {
               trailing: Icon(Icons.chevron_right),
             ),
           ),
-          
-        
         ],
       ),
     );

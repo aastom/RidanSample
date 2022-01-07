@@ -26,7 +26,10 @@ class _CartBadgeState extends State<CartBadge> {
             style: TextStyle(color: Colors.white),
           ),
           child: IconButton(
-            icon: Icon(Icons.shopping_cart_outlined,color: Colors.white,),
+            icon: Icon(
+              Icons.shopping_cart_outlined,
+              color: Colors.white,
+            ),
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(

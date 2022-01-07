@@ -19,15 +19,13 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
-   // getTheProducts();
+    // getTheProducts();
     // getAllProducts().then((value) => print(value));
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
-   // getAllProducts();
+    // getAllProducts();
     String src = "assets/images/denim.jpg";
     var screenWidth = MediaQuery.of(context).size.width;
     return Container(
@@ -39,47 +37,44 @@ class _HomeState extends State<Home> {
           //Carousel
           Expanded(
             flex: 1,
-            child:Stack(
-                children: [
-                  Container(
-                    height: 350,
-                    width: screenWidth,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(50.0),
-                        bottomLeft: Radius.circular(50.0),
-                      ),
-                      child: Image.asset(
-                        src,
-                        fit: BoxFit.cover,
-                        isAntiAlias: true,
-                      ),
+            child: Stack(
+              children: [
+                Container(
+                  height: 350,
+                  width: screenWidth,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(50.0),
+                      bottomLeft: Radius.circular(50.0),
+                    ),
+                    child: Image.asset(
+                      src,
+                      fit: BoxFit.cover,
+                      isAntiAlias: true,
                     ),
                   ),
-                  Container(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 32, horizontal: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                             
-                             
-                            },
-                            icon: Icon(
-                              Icons.search,
-                              color: Colors.white,
-                            ),
+                ),
+                Container(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 32, horizontal: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.search,
+                            color: Colors.white,
                           ),
-                          CartBadge()
-                        ],
-                      ),
+                        ),
+                        CartBadge()
+                      ],
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
+            ),
           ),
 
           //Trending List
@@ -113,7 +108,8 @@ class _HomeState extends State<Home> {
                     height: 150,
                     child: FutureBuilder<List<Products>>(
                       future: getAllProducts(),
-                      builder: (BuildContext context, AsyncSnapshot<List<Products>> snapshot) {
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<Products>> snapshot) {
                         if (snapshot.connectionState == ConnectionState.none &&
                             snapshot.hasData == null) {
                           return Container(
@@ -121,7 +117,7 @@ class _HomeState extends State<Home> {
                           );
                         }
 
-                        if(snapshot.data== null){
+                        if (snapshot.data == null) {
                           return Container(
                             height: 150,
                           );

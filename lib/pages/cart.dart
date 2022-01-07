@@ -21,8 +21,6 @@ class _CartPageState extends State<CartPage> {
 
     cartItems = Provider.of<CartManager>(context).carts;
 
-    
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
@@ -69,7 +67,7 @@ class _CartPageState extends State<CartPage> {
                                         scale: 2,
                                         fit: BoxFit.fitHeight,
                                         image: NetworkImage(
-                                              cartItems[index].image),
+                                            cartItems[index].image),
                                       ),
                                     ),
                                   ),
@@ -90,9 +88,7 @@ class _CartPageState extends State<CartPage> {
                                                 fontSize: 20),
                                           ),
                                         ),
-                                        SizedBox(height:10),
-                                      
-                                        
+                                        SizedBox(height: 10),
                                         Container(
                                           child: CustomNumberPicker(
                                             initialValue: 1,
@@ -112,8 +108,8 @@ class _CartPageState extends State<CartPage> {
                                   flex: 1,
                                   child: Container(
                                     child: Text(
-                                         r'$'+ cartItems[index].price.toString(),
-                                        ),
+                                      r'$' + cartItems[index].price.toString(),
+                                    ),
                                   ),
                                 )
                               ],

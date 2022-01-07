@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 
 class RadioWidget extends StatefulWidget {
-  const RadioWidget({ Key? key }) : super(key: key);
+  const RadioWidget({Key? key}) : super(key: key);
 
   @override
   _RadioWidgetState createState() => _RadioWidgetState();
 }
 
 class _RadioWidgetState extends State<RadioWidget> {
-
-   int? _value = 0;
+  int? _value = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
       child: radioColourMethod(),
-
     );
   }
 
-
-   Row radioColourMethod() {
+  Row radioColourMethod() {
     return Row(
       children: [
         Radio(

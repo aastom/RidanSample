@@ -27,9 +27,6 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
-  
- 
-
   int indexTop = 0;
   double valueBottom = 20;
 
@@ -95,8 +92,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ],
               ),
             ),
-
-            
             Expanded(
               child: Container(
                 padding: EdgeInsets.all(16),
@@ -157,7 +152,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ),
 
                     const SizedBox(height: 16),
-                    
+
                     SliderWidget(),
 
                     //button
@@ -216,8 +211,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
       ),
     );
   }
-
-  
 
   ///Slider Helper Methods
 

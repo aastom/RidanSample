@@ -11,10 +11,7 @@ class CartManager with ChangeNotifier {
     notifyListeners();
   }
 
-   CartManager() {
-   
+  CartManager() {
     _carts = <Products>[];
-    
-   
   }
 }

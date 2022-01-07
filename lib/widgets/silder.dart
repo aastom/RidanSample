@@ -2,27 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:ridan_sample/utils/utils.dart';
 
 class SliderWidget extends StatefulWidget {
-  const SliderWidget({ Key? key }) : super(key: key);
+  const SliderWidget({Key? key}) : super(key: key);
 
   @override
   _SliderWidgetState createState() => _SliderWidgetState();
 }
 
 class _SliderWidgetState extends State<SliderWidget> {
-
   int indexTop = 0;
   double sliderValue = 0.0;
   double valueBottom = 20;
-  
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child:buildSliderTopLabel()
-      
-    );
+    return Container(child: buildSliderTopLabel());
   }
-
-
 
   Widget buildSliderSideLabel() {
     final double min = 20;

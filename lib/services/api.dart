@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:ridan_sample/models/products.dart';
 
-Future <List<Products>> getAllProducts() async {
+Future<List<Products>> getAllProducts() async {
   String url = "https://fakestoreapi.com/products";
 
   // List data = [];
@@ -23,8 +23,6 @@ Future <List<Products>> getAllProducts() async {
         }));
 
     if (response.statusCode == 200) {
-    
-
       // debugPrint(response.data.toString());
 
       prodData =
@@ -32,23 +30,16 @@ Future <List<Products>> getAllProducts() async {
       myData = prodData;
 
       print(response.statusCode.toString());
-
-
-    
-    
     }
   } on DioError catch (e) {
     print(e.response);
     print('Error Retriving data');
   }
 
-  
-
   return myData;
 }
 
 // get all Categories
-
 
 // Future<List<Products>?> allProducts()async{
 
@@ -62,15 +53,11 @@ Future <List<Products>> getAllProducts() async {
 //           HttpHeaders.contentTypeHeader: 'application/json',
 //         }));
 
-       
-
 //     if (response.statusCode == 200) {
-     
+
 //       prodData = (response.data as List).map((v) => Products.fromJson(v)).toList();
 //       data = response.data;
-    
 
-    
 //       //print(productList.title);
 //     }
 //   } on DioError catch (e) {
