@@ -1,0 +1,110 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Rendzio Flutter CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the mvp-dev branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  package_analyzer:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest, windows-latest, macos-latest]
+        channel: [ stable ]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - uses: ./
+      with:
+        channel: ${{ matrix.channel }}
+    - name: Print FLUTTER_ROOT
+      shell: bash
+      run: echo "FLUTTER_ROOT set to $FLUTTER_ROOT"
+    - name: Print PUB_CACHE
+      shell: bash
+      run: echo "PUB_CACHE set to $PUB_CACHE"
+    - name: Run dart --version
+      shell: bash
+      run: dart --version
+    - name: Run flutter --version
+      shell: bash
+      run: flutter --version
+    - name: Run flutter analyze
+      uses: actions/analyze-code@v1
+      with:
+        package_analyzer: true
+        dart_sdk: $PUB_CACHE/dart-sdk
+        flutter_root: $FLUTTER_ROOT
+        flutter_repo: $PUB_CACHE/flutter
+        flutter_packages: $PUB_CACHE/flutter_packages
+        flutter_analysis_output: $PUB_CACHE/flutter_analysis_output
+        flutter_analysis_options: $PUB_CACHE/flutter_analysis_options
+        flutter_analysis_ignore_list: $PUB_CACHE/flutter_analysis_ignore_list
+        flutter_analysis_batch: true
+        flutter_analysis_batch_limit: 1
+        flutter_analysis_batch_delay: 0
+        flutter_analysis_batch_timeout: 0
+        flutter_analysis_batch_failure_fatal: true
+        flutter_analysis_batch_verbose_output: true
+        flutter_analysis_batch_machine_output: true
+        flutter_analysis_batch_track_widget_lifecycle: true
+        
+  android_build:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest, windows-latest, macos-latest]
+        channel: [ stable ]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-java@v2
+      with:
+        distribution: 'zulu'
+        java-version: '11'
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '2.8.1'
+    - run: flutter pub get
+    - run: flutter test
+    - run: flutter build apk
+    - run: flutter build appbundle
+
+  ios_build:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ macos-latest ]
+        channel: [ stable ]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '2.8.1'
+    - run: flutter pub get
+    - run: flutter test
+    - run: flutter build ios --release --no-codesign
+
+  web_build:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ ubuntu-latest, windows-latest, macos-latest ]
+        channel: [ stable ]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '2.8.1'
+    - run: flutter pub get
+    - run: flutter test
+    - run: flutter build web
